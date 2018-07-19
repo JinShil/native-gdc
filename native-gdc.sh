@@ -22,9 +22,8 @@
 # stop if an error is encountered
 set -e
 
-export DIR=`pwd`
-export GDC_VERSION=9
-export GCC_VERSION=$GDC_VERSION-20180617
+DIR=`pwd`
+GDC_BRANCH=stable
 
 # Creating a Directory Structure
 rm -rf $DIR/gdc-src/
@@ -39,19 +38,21 @@ mkdir $DIR/gdc-src/gdc/
 mkdir $DIR/gdc-src/build/
 mkdir $DIR/usr/
 
-# Obtain the GCC Source Code and Extract it
-cd $DIR/gdc-src/
-export GCC_MIRROR=ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/snapshots
-export GCC_NAME=$GCC_VERSION
-export GCC_SOURCE_ARCHIVE=gcc-$GCC_NAME.tar.xz
-wget $GCC_MIRROR/$GCC_NAME/$GCC_SOURCE_ARCHIVE
-tar xfv $GCC_SOURCE_ARCHIVE --strip-components=1 -C gcc
-rm $GCC_SOURCE_ARCHIVE
-
 # Obtain the GDC Source Code
 cd $DIR/gdc-src/gdc/
 git clone https://github.com/D-Programming-GDC/GDC.git .
-git checkout stable
+git checkout $GDC_BRANCH
+GCC_VERSION=$(cat gcc.version)
+GCC_VERSION=${GCC_VERSION:4}
+
+# Obtain the GCC Source Code and Extract it
+cd $DIR/gdc-src/
+GCC_MIRROR=ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/snapshots
+GCC_NAME=$GCC_VERSION
+GCC_SOURCE_ARCHIVE=gcc-$GCC_NAME.tar.xz
+wget $GCC_MIRROR/$GCC_NAME/$GCC_SOURCE_ARCHIVE
+tar xfv $GCC_SOURCE_ARCHIVE --strip-components=1 -C gcc
+rm $GCC_SOURCE_ARCHIVE
 
 # Add GDC to GCC
 cd $DIR/gdc-src/gdc/
