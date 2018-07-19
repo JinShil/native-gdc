@@ -23,6 +23,8 @@
 set -e
 
 export DIR=`pwd`
+export GDC_VERSION=9
+export GCC_VERSION=$GDC_VERSION-20180617
 
 # Creating a Directory Structure
 rm -rf $DIR/gdc-src/
@@ -39,9 +41,9 @@ mkdir $DIR/usr/
 
 # Obtain the GCC Source Code and Extract it
 cd $DIR/gdc-src/
-export GCC_MIRROR=http://ftpmirror.gnu.org/gcc
-export GCC_NAME=gcc-7.3.0
-export GCC_SOURCE_ARCHIVE=$GCC_NAME.tar.xz
+export GCC_MIRROR=ftp://ftp.mirrorservice.org/sites/sourceware.org/pub/gcc/snapshots
+export GCC_NAME=$GCC_VERSION
+export GCC_SOURCE_ARCHIVE=gcc-$GCC_NAME.tar.xz
 wget $GCC_MIRROR/$GCC_NAME/$GCC_SOURCE_ARCHIVE
 tar xfv $GCC_SOURCE_ARCHIVE --strip-components=1 -C gcc
 rm $GCC_SOURCE_ARCHIVE
@@ -49,7 +51,7 @@ rm $GCC_SOURCE_ARCHIVE
 # Obtain the GDC Source Code
 cd $DIR/gdc-src/gdc/
 git clone https://github.com/D-Programming-GDC/GDC.git .
-git checkout gdc-7
+git checkout stable
 
 # Add GDC to GCC
 cd $DIR/gdc-src/gdc/
