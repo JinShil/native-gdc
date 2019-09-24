@@ -36,7 +36,7 @@ mkdir $DIR/src/gcc/
 mkdir $DIR/src/build/
 mkdir $DIR/usr/
 
-GCC_VERSION=9-20190203
+GCC_VERSION=10-20190505
 
 # Obtain the GCC Source Code and Extract it
 cd $DIR/src/
